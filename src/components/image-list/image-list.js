@@ -29,10 +29,6 @@ class ImageList {
     // Remove image from the Store.
     console.log('REMOVE IMAGE', id)
     this.store.dispatch({type: 'REMOVE_IMAGE', id})
-
-    // Remove image from the DOM.
-    const $image = new El(`#image-${id}`)
-    $image.remove()
   }
 
   getState () {
