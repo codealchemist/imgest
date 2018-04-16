@@ -1,0 +1,30 @@
+#clear-action {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: fixed;
+  top: 80px;
+  right: 5px;
+  background: red;
+  color: white;
+  cursor: pointer;
+  z-index: 100;
+}
+
+#clear-action.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.action-icon {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  height: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+

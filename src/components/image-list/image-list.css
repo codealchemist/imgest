@@ -1,0 +1,10 @@
+#image-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sortable-ghost {
+  opacity: 0.5;
+  border: 1px solid #444;
+  filter: blur(2px);
+}

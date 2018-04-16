@@ -1,0 +1,24 @@
+#count {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  background: #1DA9F0;
+  color: white;
+  cursor: default;
+  z-index: 100;
+}
+
+.count-number {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  height: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+}

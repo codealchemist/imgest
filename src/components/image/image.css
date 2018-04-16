@@ -1,0 +1,41 @@
+.image {
+  position: relative;
+  padding: 10px;
+  background: #333;
+  margin: 1px;
+  cursor: move;
+}
+
+.image-name {
+  height: 25px;
+}
+
+.image-description {
+  display: none;
+  color: #777;
+}
+
+.image-element {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  width: 250px;
+  height: 250px;
+}
+
+.image-buttons {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+}
+
+.remove {
+  background-color: red;
+}
+
+.ellipsis {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
