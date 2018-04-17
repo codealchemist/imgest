@@ -1,4 +1,5 @@
 import El from 'eldo'
+import './notifier.css'
 
 class Notifier {
   onAction (e) {
