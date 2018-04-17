@@ -1,0 +1,30 @@
+#loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: default;
+  animation: rotation 2s infinite linear;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#loading .material-icons {
+  font-size: 50vw;
+  color: #444;
+  opacity: 0.5;
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}

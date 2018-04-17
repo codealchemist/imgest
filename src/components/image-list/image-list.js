@@ -1,6 +1,7 @@
 import El from 'eldo'
 import sortable from 'sortablejs'
 import image from 'components/image'
+import loading from 'components/loading'
 import './image-list.css'
 
 const imageList = (images = [], component) => (
@@ -19,6 +20,7 @@ class ImageList {
       if (newState !== this.state) {
         this.state = newState
         this.render()
+        loading.hide()
       }
     })
   }
@@ -29,6 +31,10 @@ class ImageList {
     // Remove image from the Store.
     console.log('REMOVE IMAGE', id)
     this.store.dispatch({type: 'REMOVE_IMAGE', id})
+  }
+
+  add (images) {
+    this.store.dispatch({type: 'ADD_IMAGE_COLLECTION', images})
   }
 
   getState () {

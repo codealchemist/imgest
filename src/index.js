@@ -6,9 +6,9 @@ import Count from 'components/count'
 import ImageList from 'components/image-list'
 import Notifier from 'components/notifier'
 import Actions from 'components/actions'
+import loading from 'components/loading'
 import El from 'eldo'
 import 'material-design-lite'
-import './index.css'
 
 const initialState = {
   count: 0,
@@ -37,24 +37,27 @@ actions
   .render()
 
 dragDrop('body', (files, pos) => {
+  loading.show()
+  const count = files.length
+  const images = []
   files = Array.from(files)
   files.forEach((file) => {
-    console.log(file)
+    // TODO: validate types
     const type = file.type || 'image/jpeg'
 
-    // convert the file to a Buffer that we can use!
-    var reader = new FileReader()
+    const reader = new FileReader()
     reader.addEventListener('load', (e) => {
       const data = e.target.result
-      store.dispatch({
-        type: 'ADD_IMAGE',
-        image: {
-          id: file.name,
-          name: file.name,
-          description: '',
-          src: `data:${type};${data}`
-        }
+      images.push({
+        id: file.name,
+        name: file.name,
+        description: '',
+        src: `data:${type};${data}`
       })
+
+      if (count === images.length) {
+        imageList.add(images)
+      }
     })
     reader.addEventListener('error', (err) => {
       console.error('FileReader error' + err)

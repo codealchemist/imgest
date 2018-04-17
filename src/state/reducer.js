@@ -36,6 +36,11 @@ const actions = {
       images
     }
   },
+  'ADD_IMAGE_COLLECTION': (state, action) => ({
+    ...state,
+    images: state.images.concat(action.images),
+    count: state.count + action.images.length
+  }),
   'CLEAR': (state, action) => ({
     images: [],
     count: 0
