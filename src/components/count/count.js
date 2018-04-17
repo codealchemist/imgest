@@ -28,8 +28,8 @@ class Count {
     return this
   }
 
-  render () {
-    const html = count(this.state)
+  render (value) {
+    const html = count(value || this.state)
     this.el.html(html)
   }
 }

@@ -1,7 +1,8 @@
 import dragDrop from 'drag-drop'
 import {compose, createStore} from 'redux'
 import replicate from 'redux-replicate';
-import localforage from 'redux-replicate-localforage';
+import replicator from 'redux-replicate-localforage';
+import localforage from 'localforage'
 import reducer from 'state/reducer'
 import Count from 'components/count'
 import ImageList from 'components/image-list'
@@ -15,18 +16,29 @@ const initialState = {
   count: 0,
   images: []
 }
-const replication = replicate({ key: 'imgest', reducerKeys: true, replicator: localforage })
+const replication = replicate({ key: 'imgest', reducerKeys: true, replicator })
 const create = compose(replication)(createStore);
 const store = create(reducer, initialState)
+
+// Get data count ASAP to display loading.
+localforage.config({
+  name: 'data'
+})
+localforage.getItem('imgest/count', (err, value) => {
+  if (err) return console.error('ERR getting images/count:', err)
+  if (value === 0) return
+
+  loading.show()
+
+  const count = new Count(store)
+  count
+    .mount('#count')
+    .render(value)
+})
 
 const notifier = new Notifier()
 notifier
   .mount('#notifier')
-
-const count = new Count(store)
-count
-  .mount('#count')
-  .render()
 
 const imageList = new ImageList(store)
 imageList
