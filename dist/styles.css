@@ -25,6 +25,7 @@ body {
   left: 0;
   right: 0;
   cursor: default;
+  opacity: 0;
 }
 
 #background i {
@@ -45,4 +46,9 @@ body {
   font-size: 5vw;
   color: rgba(2,2,2,0.2);
   margin-top: 12vw;
+}
+
+/* Display background text and icons after fonts are loaded. */
+.wf-active #background {
+  opacity: 1;
 }
