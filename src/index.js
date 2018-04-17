@@ -1,6 +1,7 @@
 import dragDrop from 'drag-drop'
 import {compose, createStore} from 'redux'
-import persistState from 'redux-localstorage'
+import replicate from 'redux-replicate';
+import localforage from 'redux-replicate-localforage';
 import reducer from 'state/reducer'
 import Count from 'components/count'
 import ImageList from 'components/image-list'
@@ -14,8 +15,9 @@ const initialState = {
   count: 0,
   images: []
 }
-const enhancer = compose(persistState())
-const store = createStore(reducer, initialState, enhancer)
+const replication = replicate({ key: 'imgest', reducerKeys: true, replicator: localforage })
+const create = compose(replication)(createStore);
+const store = create(reducer, initialState)
 
 const notifier = new Notifier()
 notifier
