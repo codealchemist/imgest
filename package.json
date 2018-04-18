@@ -28,7 +28,7 @@
   "homepage": "https://github.com/codealchemist/imgest#readme",
   "dependencies": {
     "drag-drop": "^2.14.0",
-    "eldo": "^1.1.0",
+    "eldo": "^1.3.2",
     "harp": "^0.25.0",
     "http-server": "^0.11.1",
     "material-design-lite": "^1.3.0",

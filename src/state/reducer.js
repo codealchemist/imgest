@@ -48,7 +48,6 @@ const actions = {
 }
 
 function reducer (state, action) {
-  console.log(action)
   if (!(action.type in actions)) return state
   return actions[action.type](state, action)
 }

@@ -24,7 +24,6 @@ class ImageList {
         if (!this.initialized) {
           // Defer rendering.
           setTimeout(() => {
-            console.log('RENDER')
             this.render()
           })
         }
@@ -49,7 +48,6 @@ class ImageList {
     $image.remove()
 
     // Remove image from the Store.
-    console.log('REMOVE IMAGE', id)
     this.store.dispatch({type: 'REMOVE_IMAGE', id})
   }
 
@@ -107,12 +105,14 @@ class ImageList {
     images
       .splice(0, 3)
       .forEach((image) => {
-        console.log('ID', image.id)
-        const style = image.getAttribute('data-style')
+        const $image = new El(image)
+        const style = $image.attr('data-style')
         if (!style) return
 
-        image.setAttribute('style', style)
-        image.removeAttribute('data-style')
+        $image
+          .attr('style', style)
+          .attr('data-style', false)
+          .removeClass('pending')
       })
 
     if (!images.length) return
