@@ -56,6 +56,7 @@ dragDrop('body', (files, pos) => {
   files.forEach((file, index) => {
     // TODO: validate types
     const type = file.type || 'image/jpeg'
+    console.log(file)
 
     const reader = new FileReader()
     reader.addEventListener('load', (e) => {
@@ -64,7 +65,8 @@ dragDrop('body', (files, pos) => {
         id: `${index}-${(new Date()).getTime()}`,
         name: file.name,
         description: '',
-        src: `data:${type};${data}`
+        type,
+        data
       })
 
       if (count === images.length) {

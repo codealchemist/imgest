@@ -1,11 +1,20 @@
+import WebTorrent from 'webtorrent'
 import El from 'eldo'
 import selectors from 'components/selectors'
 import './actions.css'
 
+const wt = new WebTorrent()
+
 const actions = count => `
-  <div id="clear-action" class="reset ${count? '' : 'disabled'}">
+  <div id="clear-action" class="btn-action reset ${count? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">clear</i>
+    </div>
+  </div>
+
+  <div id="share-action" class="btn-action share ${count? '' : 'disabled'}">
+    <div class="action-icon no-events">
+      <i class="material-icons">link</i>
     </div>
   </div>
 `
@@ -28,6 +37,10 @@ class Actions {
     return this.store.getState().count
   }
 
+  getImages () {
+    return this.store.getState().images
+  }
+
   clear () {
     if (!this.state) return
     if (!confirm('Are you sure you want to remove ALL images?')) return
@@ -35,9 +48,22 @@ class Actions {
     this.store.dispatch({type: 'CLEAR'})
   }
 
+  share () {
+    console.log('SHARE!')
+
+    const images = this.getImages()
+    const files = images.map(image => new Buffer(image.data))
+    console.log('FILES', files)
+    wt.seed(files, {name: 'imgest'}, (torrent) => {
+      console.log('SEEDING!', torrent)
+      console.log(torrent.magnetURI)
+    })
+  }
+
   events () {
     this.$el.on('click', (e) => {
       if (e.target.id === 'clear-action') return this.clear()
+      if (e.target.id === 'share-action') return this.share()
     })
   }
 

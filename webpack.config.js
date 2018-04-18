@@ -20,6 +20,10 @@ module.exports = {
       }
     ]
   },
+  target: 'web',
+  node: {
+    fs: 'empty'
+  },
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist'

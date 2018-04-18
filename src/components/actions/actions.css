@@ -1,17 +1,15 @@
-#clear-action {
+.btn-action {
   border-radius: 50%;
   width: 70px;
   height: 70px;
   position: fixed;
-  top: 80px;
   right: 5px;
-  background: red;
   color: white;
   cursor: pointer;
   z-index: 100;
 }
 
-#clear-action.disabled {
+.btn-action.disabled {
   opacity: 0.5;
   cursor: default;
 }
@@ -28,3 +26,12 @@
   right: 0;
 }
 
+#clear-action {
+  top: 80px;
+  background: red;
+}
+
+#share-action {
+  top: 155px;
+  background: #5b5;
+}
