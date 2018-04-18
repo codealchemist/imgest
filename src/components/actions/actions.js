@@ -1,4 +1,5 @@
 import El from 'eldo'
+import selectors from 'components/selectors'
 import './actions.css'
 
 const actions = count => `
@@ -30,6 +31,7 @@ class Actions {
   clear () {
     if (!this.state) return
     if (!confirm('Are you sure you want to remove ALL images?')) return
+    selectors.$imageList.html('')
     this.store.dispatch({type: 'CLEAR'})
   }
 

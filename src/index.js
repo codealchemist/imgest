@@ -26,9 +26,7 @@ localforage.config({
 })
 localforage.getItem('imgest/count', (err, value) => {
   if (err) return console.error('ERR getting images/count:', err)
-  if (value === 0) return
-
-  loading.show()
+  if (value > 0) loading.show()
 
   const count = new Count(store)
   count
@@ -55,7 +53,7 @@ dragDrop('body', (files, pos) => {
   const count = files.length
   const images = []
   files = Array.from(files)
-  files.forEach((file) => {
+  files.forEach((file, index) => {
     // TODO: validate types
     const type = file.type || 'image/jpeg'
 
@@ -63,7 +61,7 @@ dragDrop('body', (files, pos) => {
     reader.addEventListener('load', (e) => {
       const data = e.target.result
       images.push({
-        id: file.name,
+        id: `${index}-${(new Date()).getTime()}`,
         name: file.name,
         description: '',
         src: `data:${type};${data}`

@@ -4,7 +4,7 @@ import image from 'components/image'
 import loading from 'components/loading'
 import './image-list.css'
 
-const imageList = (images = [], component) => (
+const imageList = (images = []) => (
   images
     .map((imageState, index) => image({...imageState, index}))
     .join('')
@@ -14,19 +14,39 @@ class ImageList {
   constructor (store) {
     this.store = store
     this.state = this.getState()
+    this.initialized = false
 
     store.subscribe(() => {
       const newState = this.getState()
       if (newState !== this.state) {
-        this.state = newState
-        this.render()
         loading.hide()
+
+        if (!this.initialized) {
+          // Defer rendering.
+          setTimeout(() => {
+            console.log('RENDER')
+            this.render()
+          })
+        }
+
+        this.state = newState
+        this.initialized = true
       }
     })
   }
 
+  didCountChange (newState) {
+    const newCount = newState.length
+    const count = this.state.length
+    return (newCount !== count)
+  }
+
   removeImage (e, {id}) {
     e.stopPropagation()
+
+    // Remove image from the DOM.
+    const $image = new El(`#image-${id}`)
+    $image.remove()
 
     // Remove image from the Store.
     console.log('REMOVE IMAGE', id)
@@ -35,6 +55,15 @@ class ImageList {
 
   add (images) {
     this.store.dispatch({type: 'ADD_IMAGE_COLLECTION', images})
+
+    // Render new images.
+    if (this.initialized) {
+      this.$el.appendHtml(imageList(images))
+
+      setTimeout(() => {
+        this.loadImages()
+      })
+    }
   }
 
   getState () {
@@ -61,13 +90,35 @@ class ImageList {
   }
 
   render () {
-    const html = imageList(this.state, this)
+    const html = imageList(this.state)
     this.$el.html(html)
+    setTimeout(() => {
+      this.loadImages()
+    }, 100)
 
     // Create sortable images list.
     sortable.create(this.$el.get(), {
       onSort: (e) => this.onSort(e)
     })
+  }
+
+  loadImages (images) {
+    images = images || Array.from(document.querySelectorAll('.image.pending .image-element'))
+    images
+      .splice(0, 3)
+      .forEach((image) => {
+        console.log('ID', image.id)
+        const style = image.getAttribute('data-style')
+        if (!style) return
+
+        image.setAttribute('style', style)
+        image.removeAttribute('data-style')
+      })
+
+    if (!images.length) return
+    setTimeout(() => {
+      this.loadImages(images)
+    }, 100)
   }
 }
 
