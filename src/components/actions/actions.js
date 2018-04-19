@@ -1,4 +1,5 @@
 import WebTorrent from 'webtorrent'
+import Clipboard from 'clipboard'
 import El from 'eldo'
 import selectors from 'components/selectors'
 import './actions.css'
@@ -30,6 +31,10 @@ class Actions {
         this.state = newState
         this.render()
       }
+    })
+
+    new Clipboard('#share-action', {
+      text: () => 'ROCK!'
     })
   }
 
