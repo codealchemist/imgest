@@ -9,6 +9,10 @@
   z-index: 100;
 }
 
+.btn-action:hover {
+  opacity: 0.75;
+}
+
 .btn-action.disabled {
   opacity: 0.5;
   cursor: default;
@@ -34,4 +38,23 @@
 #share-action {
   top: 155px;
   background: #5b5;
+}
+
+#copy-magnet-action {
+  top: 230px;
+  background: #77f;
+}
+
+.webtorrent-icon {
+  background-image: url('webtorrent-icon.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

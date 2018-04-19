@@ -6,7 +6,7 @@ import localforage from 'localforage'
 import reducer from 'state/reducer'
 import Count from 'components/count'
 import ImageList from 'components/image-list'
-import Notifier from 'components/notifier'
+import notifier from 'components/notifier'
 import Actions from 'components/actions'
 import loading from 'components/loading'
 import El from 'eldo'
@@ -33,10 +33,6 @@ localforage.getItem('imgest/count', (err, value) => {
     .mount('#count')
     .render(value)
 })
-
-const notifier = new Notifier()
-notifier
-  .mount('#notifier')
 
 const imageList = new ImageList(store)
 imageList

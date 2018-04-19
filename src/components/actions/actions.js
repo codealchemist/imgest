@@ -2,11 +2,12 @@ import WebTorrent from 'webtorrent'
 import Clipboard from 'clipboard'
 import El from 'eldo'
 import selectors from 'components/selectors'
+import notifier from 'components/notifier'
 import './actions.css'
 
 const wt = new WebTorrent()
 
-const actions = count => `
+const actions = (count, hasMagnet) => `
   <div id="clear-action" class="btn-action reset ${count? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">clear</i>
@@ -14,6 +15,10 @@ const actions = count => `
   </div>
 
   <div id="share-action" class="btn-action share ${count? '' : 'disabled'}">
+    <div class="webtorrent-icon no-events"></div>
+  </div>
+
+  <div id="copy-magnet-action" class="btn-action share ${hasMagnet? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">link</i>
     </div>
@@ -24,6 +29,7 @@ class Actions {
   constructor (store) {
     this.store = store
     this.state = this.getState()
+    this.magnetUri = null
 
     store.subscribe(() => {
       const newState = this.getState()
@@ -33,8 +39,11 @@ class Actions {
       }
     })
 
-    new Clipboard('#share-action', {
-      text: () => 'ROCK!'
+    new Clipboard('#copy-magnet-action', {
+      text: () => {
+        notifier.show({message: '🔗 copied!'})
+        return this.magnetUri
+      }
     })
   }
 
@@ -62,6 +71,8 @@ class Actions {
     wt.seed(files, {name: 'imgest'}, (torrent) => {
       console.log('SEEDING!', torrent)
       console.log(torrent.magnetURI)
+      this.magnetUri = torrent.magnetURI
+      this.render()
     })
   }
 
@@ -79,7 +90,7 @@ class Actions {
   }
 
   render () {
-    const html = actions(this.state)
+    const html = actions(this.state, !!this.magnetUri)
     this.$el.html(html)
   }
 }
