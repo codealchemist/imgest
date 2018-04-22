@@ -1,7 +1,6 @@
 import El from 'eldo'
 import sortable from 'sortablejs'
 import image from 'components/image'
-import loading from 'components/loading'
 import './image-list.css'
 
 const imageList = (images = []) => (
@@ -19,7 +18,9 @@ class ImageList {
     store.subscribe(() => {
       const newState = this.getState()
       if (newState !== this.state) {
-        loading.hide()
+        if (typeof this.onDoneCallback === 'function') {
+          this.onDoneCallback()
+        }
 
         if (!this.initialized) {
           // Defer rendering.
@@ -119,6 +120,11 @@ class ImageList {
     setTimeout(() => {
       this.loadImages(images)
     }, 100)
+  }
+
+  onDone (callback) {
+    this.onDoneCallback = callback
+    return this
   }
 }
 

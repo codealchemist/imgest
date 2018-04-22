@@ -3,6 +3,7 @@ import Clipboard from 'clipboard'
 import El from 'eldo'
 import selectors from 'components/selectors'
 import notifier from 'components/notifier'
+import urlShortener from 'components/url-shortener'
 import './actions.css'
 
 const wt = new WebTorrent()
@@ -30,6 +31,7 @@ class Actions {
     this.store = store
     this.state = this.getState()
     this.magnetUri = null
+    this.shortUrl = null
 
     store.subscribe(() => {
       const newState = this.getState()
@@ -42,7 +44,7 @@ class Actions {
     new Clipboard('#copy-magnet-action', {
       text: () => {
         notifier.show({message: '🔗 copied!'})
-        return this.magnetUri
+        return this.shortUrl
       }
     })
   }
@@ -63,16 +65,21 @@ class Actions {
   }
 
   share () {
-    console.log('SHARE!')
-
     const images = this.getImages()
     const files = images.map(image => new Buffer(image.data))
-    console.log('FILES', files)
-    wt.seed(files, {name: 'imgest'}, (torrent) => {
-      console.log('SEEDING!', torrent)
+    const ts = (new Date()).getTime()
+    const name = `imgest-${ts}`
+    wt.seed(files, {name}, (torrent) => {
       console.log(torrent.magnetURI)
       this.magnetUri = torrent.magnetURI
-      this.render()
+
+      urlShortener
+        .create(this.magnetUri)
+        .shorten()
+        .onDone((shortUrl) => {
+          this.shortUrl = shortUrl
+          this.render()
+        })
     })
   }
 
@@ -90,7 +97,7 @@ class Actions {
   }
 
   render () {
-    const html = actions(this.state, !!this.magnetUri)
+    const html = actions(this.state, !!this.shortUrl)
     this.$el.html(html)
   }
 }
