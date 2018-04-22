@@ -13,6 +13,14 @@ class Loading {
   hide () {
     this.$el.disappear()
   }
+
+  minimize () {
+    this.$el.addClass('minimized')
+  }
+
+  maximize () {
+    this.$el.removeClass('minimized')
+  }
 }
 
 const loading = new Loading()

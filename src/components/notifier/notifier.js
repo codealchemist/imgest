@@ -2,10 +2,6 @@ import El from 'eldo'
 import './notifier.css'
 
 class Notifier {
-  onAction (e) {
-    console.log('NOTIFIER action', e)
-  }
-
   show (data) {
     this.$el.get().MaterialSnackbar.showSnackbar(data)
     return this
@@ -17,4 +13,7 @@ class Notifier {
   }
 }
 
-export default Notifier
+const notifier = new Notifier()
+notifier.mount('#notifier')
+
+export default notifier

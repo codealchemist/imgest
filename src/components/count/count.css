@@ -9,6 +9,8 @@
   color: white;
   cursor: default;
   z-index: 100;
+  display: none;
+  transition: all 0.5s;
 }
 
 .count-number {

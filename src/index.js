@@ -1,82 +1,43 @@
-import dragDrop from 'drag-drop'
-import {compose, createStore} from 'redux'
-import replicate from 'redux-replicate';
-import replicator from 'redux-replicate-localforage';
-import localforage from 'localforage'
-import reducer from 'state/reducer'
 import Count from 'components/count'
-import ImageList from 'components/image-list'
-import Notifier from 'components/notifier'
-import Actions from 'components/actions'
+import torrentLoader from 'components/torrent-loader'
+import TorrentRenderer from 'components/torrent-renderer'
+import localLoader from 'components/local-loader'
+import LocalRenderer from 'components/local-renderer'
+import error from 'components/error-message'
+import notifier from 'components/notifier'
 import loading from 'components/loading'
-import El from 'eldo'
 import 'material-design-lite'
 
-const initialState = {
-  count: 0,
-  images: []
-}
-const replication = replicate({ key: 'imgest', reducerKeys: true, replicator })
-const create = compose(replication)(createStore);
-const store = create(reducer, initialState)
-
-// Get data count ASAP to display loading.
-localforage.config({
-  name: 'data'
-})
-localforage.getItem('imgest/count', (err, value) => {
-  if (err) return console.error('ERR getting images/count:', err)
-  if (value > 0) loading.show()
-
-  const count = new Count(store)
-  count
-    .mount('#count')
-    .render(value)
-})
-
-const notifier = new Notifier()
-notifier
-  .mount('#notifier')
-
-const imageList = new ImageList(store)
-imageList
-  .mount('#image-list')
-  .render()
-
-const actions = new Actions(store)
-actions
-  .mount('#actions')
-  .render()
-
-dragDrop('body', (files, pos) => {
+torrentLoader.autoload()
+if (torrentLoader.loading) {
   loading.show()
-  const count = files.length
-  const images = []
-  files = Array.from(files)
-  files.forEach((file, index) => {
-    // TODO: validate types
-    const type = file.type || 'image/jpeg'
+  const torrentRenderer = new TorrentRenderer()
+  torrentRenderer
+    .mount('#image-list')
+    .onLoading(() => loading.minimize())
+    .onDone(() => loading.hide())
 
-    const reader = new FileReader()
-    reader.addEventListener('load', (e) => {
-      const data = e.target.result
-      images.push({
-        id: `${index}-${(new Date()).getTime()}`,
-        name: file.name,
-        description: '',
-        src: `data:${type};${data}`
-      })
+  torrentLoader.onTorrent((torrent) => {
+    torrentRenderer.render(torrent)
 
-      if (count === images.length) {
-        imageList.add(images)
-      }
-    })
-    reader.addEventListener('error', (err) => {
-      console.error('FileReader error' + err)
-    })
-    reader.readAsDataURL(file)
+    const count = new Count()
+    count
+      .mount('#count')
+      .render(torrent.files.length)
   })
-})
+
+  torrentLoader.onError((err) => {
+    loading.hide()
+    error.show(err)
+  })
+} else {
+  const store = localLoader()
+  const localRenderer = new LocalRenderer(store)
+  localRenderer
+    .mount('#image-list')
+    .onDone(() => loading.hide())
+    .render()
+}
 
 setTimeout(() => {
   notifier.show({message: 'Rock it!'})

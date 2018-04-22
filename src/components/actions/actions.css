@@ -1,17 +1,19 @@
-#clear-action {
+.btn-action {
   border-radius: 50%;
   width: 70px;
   height: 70px;
   position: fixed;
-  top: 80px;
   right: 5px;
-  background: red;
   color: white;
   cursor: pointer;
   z-index: 100;
 }
 
-#clear-action.disabled {
+.btn-action:hover {
+  opacity: 0.75;
+}
+
+.btn-action.disabled {
   opacity: 0.5;
   cursor: default;
 }
@@ -28,3 +30,31 @@
   right: 0;
 }
 
+#clear-action {
+  top: 80px;
+  background: red;
+}
+
+#share-action {
+  top: 155px;
+  background: #444;
+}
+
+#copy-magnet-action {
+  top: 230px;
+  background: #77f;
+}
+
+.webtorrent-icon {
+  background-image: url('webtorrent-icon.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

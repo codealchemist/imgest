@@ -1,11 +1,27 @@
+import WebTorrent from 'webtorrent'
+import Clipboard from 'clipboard'
 import El from 'eldo'
 import selectors from 'components/selectors'
+import notifier from 'components/notifier'
+import urlShortener from 'components/url-shortener'
 import './actions.css'
 
-const actions = count => `
-  <div id="clear-action" class="reset ${count? '' : 'disabled'}">
+const wt = new WebTorrent()
+
+const actions = (count, hasMagnet) => `
+  <div id="clear-action" class="btn-action reset ${count? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">clear</i>
+    </div>
+  </div>
+
+  <div id="share-action" class="btn-action share ${count? '' : 'disabled'}">
+    <div class="webtorrent-icon no-events"></div>
+  </div>
+
+  <div id="copy-magnet-action" class="btn-action share ${hasMagnet? '' : 'disabled'}">
+    <div class="action-icon no-events">
+      <i class="material-icons">link</i>
     </div>
   </div>
 `
@@ -14,6 +30,8 @@ class Actions {
   constructor (store) {
     this.store = store
     this.state = this.getState()
+    this.magnetUri = null
+    this.shortUrl = null
 
     store.subscribe(() => {
       const newState = this.getState()
@@ -22,10 +40,21 @@ class Actions {
         this.render()
       }
     })
+
+    new Clipboard('#copy-magnet-action', {
+      text: () => {
+        notifier.show({message: '🔗 copied!'})
+        return this.shortUrl
+      }
+    })
   }
 
   getState () {
     return this.store.getState().count
+  }
+
+  getImages () {
+    return this.store.getState().images
   }
 
   clear () {
@@ -35,9 +64,29 @@ class Actions {
     this.store.dispatch({type: 'CLEAR'})
   }
 
+  share () {
+    const images = this.getImages()
+    const files = images.map(image => new Buffer(image.data))
+    const ts = (new Date()).getTime()
+    const name = `imgest-${ts}`
+    wt.seed(files, {name}, (torrent) => {
+      console.log(torrent.magnetURI)
+      this.magnetUri = torrent.magnetURI
+
+      urlShortener
+        .create(this.magnetUri)
+        .shorten()
+        .onDone((shortUrl) => {
+          this.shortUrl = shortUrl
+          this.render()
+        })
+    })
+  }
+
   events () {
     this.$el.on('click', (e) => {
       if (e.target.id === 'clear-action') return this.clear()
+      if (e.target.id === 'share-action') return this.share()
     })
   }
 
@@ -48,7 +97,7 @@ class Actions {
   }
 
   render () {
-    const html = actions(this.state)
+    const html = actions(this.state, !!this.shortUrl)
     this.$el.html(html)
   }
 }

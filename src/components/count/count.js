@@ -7,6 +7,7 @@ const count = count => `
 
 class Count {
   constructor (store) {
+    if (!store) return
     this.store = store
     this.state = this.getState()
 
@@ -24,13 +25,14 @@ class Count {
   }
 
   mount (el) {
-    this.el = new El(el)
+    this.$el = new El(el)
     return this
   }
 
   render (value) {
     const html = count(value || this.state)
-    this.el.html(html)
+    this.$el.html(html)
+    this.$el.show()
   }
 }
 
