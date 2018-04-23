@@ -4,19 +4,27 @@
   height: 70px;
   position: fixed;
   right: 5px;
+  top: 5px;
   color: white;
   cursor: pointer;
   z-index: 100;
 }
 
 .btn-action:hover {
-  opacity: 0.75;
+  /* opacity: 0.75; */
+  background: white !important;
+  color: black;
 }
 
 .btn-action.disabled {
   opacity: 0.4;
   cursor: default;
-  background-color: black !important;
+  background: black !important;
+}
+
+.btn-action.disabled:hover {
+  background: inherit;
+  color: inherit;
 }
 
 .action-icon {
@@ -31,31 +39,11 @@
   right: 0;
 }
 
-#clear-action {
-  top: 80px;
+#cancel-action {
   background: red;
 }
 
-#share-action {
-  top: 155px;
-  background: #444;
-}
-
-#copy-magnet-action {
-  top: 230px;
+#save-action {
+  right: 80px;
   background: #77f;
-}
-
-.webtorrent-icon {
-  background-image: url('webtorrent-icon.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 80%;
-  height: 80%;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }

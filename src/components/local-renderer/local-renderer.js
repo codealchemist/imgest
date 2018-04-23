@@ -2,16 +2,14 @@ import dragDrop from 'drag-drop'
 import ImageList from 'components/image-list'
 import Actions from 'components/actions'
 import loading from 'components/loading'
+import ImageEditor from '../image-editor/image-editor';
 
 class LocalRenderer {
   constructor (store) {
     this.store = store
     this.imageList = new ImageList(store)
-  }
-
-  mount (el) {
-    this.imageList.mount(el)
-    return this
+    this.editor = new ImageEditor(store)
+    this.actions = new Actions(store)
   }
 
   setDragAndDrop () {
@@ -47,15 +45,16 @@ class LocalRenderer {
     })
   }
 
-  renderActions () {
-    const actions = new Actions(this.store)
-    actions
-      .mount('#actions')
-      .render()
+  mount (el) {
+    this.imageList.mount(el)
+    this.editor.mount('#image-editor-container')
+    this.actions.mount('#actions')
+    return this
   }
 
   render () {
-    this.renderActions()
+    this.actions.render()
+    this.editor.render()
     this.setDragAndDrop()
     this.imageList
       .onDone(this.onDoneCallback)

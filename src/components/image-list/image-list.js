@@ -41,7 +41,7 @@ class ImageList {
     return (newCount !== count)
   }
 
-  removeImage (e, {id}) {
+  remove (e, {id}) {
     e.stopPropagation()
 
     // Remove image from the DOM.
@@ -50,6 +50,15 @@ class ImageList {
 
     // Remove image from the Store.
     this.store.dispatch({type: 'REMOVE_IMAGE', id})
+  }
+
+  edit (e, {id}) {
+    const image = this.state
+      .filter(image => {
+        if (image.id === id) return image
+      })[0]
+
+    this.store.dispatch({type: 'OPEN_IMAGE_EDITOR', image: { ...image }})
   }
 
   add (images) {
@@ -72,8 +81,9 @@ class ImageList {
   events () {
     this.$el.on('click', (e) => {
       e.stopPropagation()
-      console.log('IMAGE LIST CLICK', e)
-      if (e.target.className.match(/^remove.*$/)) this.removeImage(e, e.target.dataset)
+      // console.log('IMAGE LIST CLICK', e)
+      if (e.target.className.match(/^remove.*$/)) this.remove(e, e.target.dataset)
+      if (e.target.className.match(/^edit.*$/)) this.edit(e, e.target.dataset)
     })
   }
 

@@ -10,7 +10,11 @@ import loading from 'components/loading'
 function load () {
   const initialState = {
     count: 0,
-    images: []
+    images: [],
+    editor: {
+      image: {},
+      isOpen: false
+    }
   }
   const replication = replicate({ key: 'imgest', reducerKeys: true, replicator })
   const create = compose(replication)(createStore);
