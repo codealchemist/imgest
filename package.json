@@ -1,6 +1,6 @@
 {
   "name": "imgest",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Add, edit and sort images in the browser, then share your images with WebTorrent!",
   "private": true,
   "scripts": {
