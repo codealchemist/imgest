@@ -63,14 +63,22 @@ class ImageEditor {
     })
 
     this.actions.onSave(() => {
-      const id = this.state.image.id
-      const name = this.$name.html()
-      const description = this.$description.html()
-      this.store.dispatch({type: 'UPDATE_IMAGE', id, name, description})
-      notifier.show({message: 'Image details saved successfully!'})
+      this.save()
     })
 
     this.initialized = true
+  }
+
+  save () {
+    const id = this.state.image.id
+    const name = this.$name.html()
+    const description = this.$description.html()
+    this.store.dispatch({type: 'UPDATE_IMAGE', id, name, description})
+    notifier.show({message: 'Image details saved successfully!'})
+
+    // Update listed image.
+    const $name = new El(`#image-${id} .image-name`)
+    $name.html(name)
   }
 }
 
