@@ -1,22 +1,35 @@
 import El from 'eldo'
 import './editor-actions.css'
 
-const actions = ({isOpen}) => {
+const actions = ({isOpen, readOnly}) => {
   if (!isOpen) return ''
 
-  return `
-    <div id="cancel-action" class="btn-action">
-      <div class="action-icon no-events">
-        <i class="material-icons">clear</i>
-      </div>
-    </div>
-
+  const saveAction = `
     <div id="save-action" class="btn-action disabled">
       <div class="action-icon no-events">
         <i class="material-icons">done</i>
       </div>
     </div>
   `
+
+  const cancelAction = `
+    <div id="cancel-action" class="btn-action">
+      <div class="action-icon no-events">
+        <i class="material-icons">clear</i>
+      </div>
+    </div>
+  `
+
+  const backAction = `
+    <div id="cancel-action" class="btn-action">
+      <div class="action-icon no-events">
+        <i class="material-icons">arrow_back</i>
+      </div>
+    </div>
+  `
+
+  if (readOnly) return backAction
+  return saveAction + cancelAction
 }
 
 class EditorActions {

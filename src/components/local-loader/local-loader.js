@@ -6,16 +6,9 @@ import localforage from 'localforage'
 import reducer from 'state/reducer'
 import Count from 'components/count'
 import loading from 'components/loading'
+import initialState from 'state/initial.json'
 
 function load () {
-  const initialState = {
-    count: 0,
-    images: [],
-    editor: {
-      image: {},
-      isOpen: false
-    }
-  }
   const replication = replicate({ key: 'imgest', reducerKeys: true, replicator })
   const create = compose(replication)(createStore);
   const store = create(reducer, initialState)

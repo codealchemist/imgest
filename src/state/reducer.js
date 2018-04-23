@@ -41,14 +41,16 @@ const actions = {
     ...state,
     editor: {
       image: { ...action.image },
-      isOpen: true
+      isOpen: true,
+      readOnly: action.readOnly || false
     }
   }),
   'CLOSE_IMAGE_EDITOR': (state, action) => ({
     ...state,
     editor: {
+      ...state.editor,
       image: {},
-      isOpen: false
+      isOpen: false,
     }
   }),
   'SORT_IMAGE': (state, {newIndex, oldIndex}) => {

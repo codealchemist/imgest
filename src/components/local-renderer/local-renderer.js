@@ -2,7 +2,7 @@ import dragDrop from 'drag-drop'
 import ImageList from 'components/image-list'
 import Actions from 'components/actions'
 import loading from 'components/loading'
-import ImageEditor from '../image-editor/image-editor';
+import ImageEditor from '../image-editor/image-editor'
 
 class LocalRenderer {
   constructor (store) {

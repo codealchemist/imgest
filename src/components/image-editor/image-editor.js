@@ -3,13 +3,13 @@ import EditorActions from 'components/editor-actions';
 import notifier from 'components/notifier'
 import './image-editor.css'
 
-const form = ({image: {id, name, description, type, data}, isOpen}) => {
+const form = ({image: {id, name, description, type, data}, isOpen, readOnly}) => {
   if (!isOpen) return ''
 
   return `
-    <div id="image-editor">
-      <h1 id="editor-image-name" contenteditable="true">${name}</h1>
-      <div id="editor-image-description" class="description" contenteditable="true">${description}</div>
+    <div id="image-editor" ${!readOnly? 'class="editable"' : ''}>
+      <h1 id="editor-image-name" ${readOnly? '' : 'contenteditable="true"'}>${name}</h1>
+      <div id="editor-image-description" class="description" ${readOnly? '' : 'contenteditable="true"'}>${description}</div>
       <div class="image-editor-image" style="background-image: url('data:${type};${data}')"></div>
     </div>
   `
