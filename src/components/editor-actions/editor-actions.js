@@ -72,7 +72,7 @@ class EditorActions {
   }
 
   enableSave () {
-    if (!this.$save) this.$save = new El('#save-action')
+    this.$save = new El('#save-action')
     this.$save.removeClass('disabled')
   }
 
