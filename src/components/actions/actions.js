@@ -4,18 +4,19 @@ import El from 'eldo'
 import selectors from 'components/selectors'
 import notifier from 'components/notifier'
 import urlShortener from 'components/url-shortener'
+import loading from 'components/loading'
 import './actions.css'
 
 const wt = new WebTorrent()
 
-const actions = (count, hasMagnet) => `
+const actions = ({count, hasMagnet, isCreatingMagnet}) => `
   <div id="clear-action" class="btn-action reset ${count? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">clear</i>
     </div>
   </div>
 
-  <div id="share-action" class="btn-action share ${count? '' : 'disabled'}">
+  <div id="share-action" class="btn-action share ${(count && !isCreatingMagnet)? '' : 'disabled'}">
     <div class="webtorrent-icon no-events"></div>
   </div>
 
@@ -32,6 +33,7 @@ class Actions {
     this.state = this.getState()
     this.magnetUri = null
     this.shortUrl = null
+    this.isCreatingMagnet = false
 
     store.subscribe(() => {
       const newState = this.getState()
@@ -65,6 +67,10 @@ class Actions {
   }
 
   share () {
+    this.isCreatingMagnet = true
+    loading.torrent().show()
+    this.render()
+
     const images = this.getImages()
     const files = images.map(image => new Buffer(image.data))
     const ts = (new Date()).getTime()
@@ -78,7 +84,9 @@ class Actions {
         .shorten()
         .onDone((shortUrl) => {
           this.shortUrl = shortUrl
+          this.isCreatingMagnet = false
           this.render()
+          loading.torrent().hide()
         })
     })
   }
@@ -97,7 +105,11 @@ class Actions {
   }
 
   render () {
-    const html = actions(this.state, !!this.shortUrl)
+    const html = actions({
+      count: this.state,
+      hasMagnet: !!this.shortUrl,
+      isCreatingMagnet: this.isCreatingMagnet
+    })
     this.$el.html(html)
   }
 }
