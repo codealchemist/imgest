@@ -23,10 +23,10 @@ You can drag and drop the thumbnails in the list to sort them.
 
 Each time you sort an image the list order is persisted.
 
-You can click the delete button to remote images from the store.
+You can click the delete button to remove images from the store.
 
-You can click the edit button to change the image title, which is
-the image name by default, and set a description.
+You can click the edit button to change the image title (which is
+the image name by default) and set a description.
 
 When you click on the WebTorrent button a new torrent is created
 with all your images.
@@ -40,8 +40,8 @@ copied to the clipboard.
 When this link is opened a new WebTorrent client is created and
 uses the magnet link to get the shared content.
 
-If everything works fine a new peer is available and starts loading
-your image gallery.
+Hooray! A new peer is available and starts loading
+your image gallery!
 
 **imgest** doesn't use a backend, everything happens in the browser!
 
