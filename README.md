@@ -46,7 +46,7 @@ your image gallery!
 **imgest** doesn't use a backend, everything happens in the browser!
 
 If you share your link with more friends there will be more bandwidth
-available for everyone because your torrenting between all peers!
+available for everyone because all peers create a swarm!
 
 ## Let's hack this together!
 
