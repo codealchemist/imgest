@@ -80,6 +80,7 @@ const actions = {
     count: state.count + action.images.length
   }),
   'CLEAR': (state, action) => ({
+    ...state,
     images: [],
     count: 0
   }),
