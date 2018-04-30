@@ -18,10 +18,6 @@ class ImageList {
     store.subscribe(() => {
       const newState = this.getState()
       if (newState !== this.state) {
-        if (typeof this.onDoneCallback === 'function') {
-          this.onDoneCallback()
-        }
-
         if (!this.initialized) {
           // Defer rendering.
           setTimeout(() => {
@@ -68,9 +64,9 @@ class ImageList {
     if (this.initialized) {
       this.$el.appendHtml(imageList(images))
 
-      setTimeout(() => {
-        this.loadImages()
-      })
+      if (typeof this.onDoneCallback === 'function') {
+        this.onDoneCallback()
+      } 
     }
   }
 
@@ -101,14 +97,18 @@ class ImageList {
   render () {
     const html = imageList(this.state)
     this.$el.html(html)
-    setTimeout(() => {
-      this.loadImages()
-    }, 100)
+    // setTimeout(() => {
+    //   this.loadImages()
+    // }, 100)
 
     // Create sortable images list.
     sortable.create(this.$el.get(), {
       onSort: (e) => this.onSort(e)
     })
+
+    if (typeof this.onDoneCallback === 'function') {
+      this.onDoneCallback()
+    }
   }
 
   loadImages (images) {

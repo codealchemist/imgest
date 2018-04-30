@@ -1,3 +1,5 @@
+import LazyLoad from 'vanilla-lazyload'
+import El from 'eldo'
 import Count from 'components/count'
 import torrentLoader from 'components/torrent-loader'
 import TorrentRenderer from 'components/torrent-renderer'
@@ -7,6 +9,15 @@ import error from 'components/error-message'
 import notifier from 'components/notifier'
 import loading from 'components/loading'
 import 'material-design-lite'
+
+// Image lazy loading.
+const lazy = new LazyLoad({
+  elements_selector: '.image-element',
+  callback_set: (el) => {
+    const image = new El(el)
+    image.attr('data-src', false)
+  }
+})
 
 torrentLoader.autoload()
 if (torrentLoader.loading) {
@@ -35,7 +46,10 @@ if (torrentLoader.loading) {
   const localRenderer = new LocalRenderer(store)
   localRenderer
     .mount('#image-list')
-    .onDone(() => loading.hide())
+    .onDone(() => {
+      loading.hide()
+      lazy.update()
+    })
     .render()
 }
 
