@@ -22,7 +22,7 @@ class LocalRenderer {
         // TODO: validate types
         const type = file.type || 'image/jpeg'
 
-        const reader = new FileReader()
+        const reader = new window.FileReader()
         reader.addEventListener('load', (e) => {
           const data = e.target.result
           images.push({

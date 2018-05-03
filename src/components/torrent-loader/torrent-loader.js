@@ -59,7 +59,7 @@ class TorrentLoader {
   }
 
   autoload () {
-    const hash = location.hash.substr(1)
+    const hash = window.location.hash.substr(1)
     if (!hash) return
 
     // Autoload magnet link.
@@ -73,7 +73,7 @@ class TorrentLoader {
     urlShortener.redirect(hash)
   }
 
-  isMagnetLink(value) {
+  isMagnetLink (value) {
     return value.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
   }
 

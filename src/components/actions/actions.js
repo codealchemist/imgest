@@ -10,17 +10,17 @@ import './actions.css'
 const wt = new WebTorrent()
 
 const actions = ({count, hasMagnet, isCreatingMagnet}) => `
-  <div id="clear-action" class="btn-action reset ${count? '' : 'disabled'}">
+  <div id="clear-action" class="btn-action reset ${count ? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">clear</i>
     </div>
   </div>
 
-  <div id="share-action" class="btn-action share ${(count && !isCreatingMagnet)? '' : 'disabled'}">
+  <div id="share-action" class="btn-action share ${(count && !isCreatingMagnet) ? '' : 'disabled'}">
     <div class="webtorrent-icon no-events"></div>
   </div>
 
-  <div id="copy-magnet-action" class="btn-action share ${hasMagnet? '' : 'disabled'}">
+  <div id="copy-magnet-action" class="btn-action share ${hasMagnet ? '' : 'disabled'}">
     <div class="action-icon no-events">
       <i class="material-icons">link</i>
     </div>
@@ -43,6 +43,7 @@ class Actions {
       }
     })
 
+    // eslint-disable-next-line
     new Clipboard('#copy-magnet-action', {
       text: () => {
         notifier.show({message: '🔗 copied!'})
@@ -61,7 +62,7 @@ class Actions {
 
   clear () {
     if (!this.state) return
-    if (!confirm('Are you sure you want to remove ALL images?')) return
+    if (!window.confirm('Are you sure you want to remove ALL images?')) return
     selectors.$imageList.html('')
     this.store.dispatch({type: 'CLEAR'})
   }

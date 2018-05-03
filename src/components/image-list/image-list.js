@@ -66,7 +66,7 @@ class ImageList {
 
       if (typeof this.onDoneCallback === 'function') {
         this.onDoneCallback()
-      } 
+      }
     }
   }
 
@@ -90,7 +90,6 @@ class ImageList {
   }
 
   onSort ({oldIndex, newIndex, item}) {
-    const {id} = item.dataset
     this.store.dispatch({type: 'SORT_IMAGE', newIndex, oldIndex})
   }
 
