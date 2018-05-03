@@ -64,6 +64,6 @@ Enjoy!
 
 ## References
 
-[https://github.com/webtorrent/webtorrent](WebTorrent) is a streaming torrent client for the web.
+[WebTorrent](https://github.com/webtorrent/webtorrent) is a streaming torrent client for the web.
 
-[https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API](IndexedDB API).
+[IndexedDB API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
