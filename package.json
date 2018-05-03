@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --mode=production",
-    "dist": "http-server dist"
+    "dist": "http-server dist",
+    "test": "standard-focus"
   },
   "repository": {
     "type": "git",

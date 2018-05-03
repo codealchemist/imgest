@@ -50,14 +50,12 @@ const actions = {
     editor: {
       ...state.editor,
       image: {},
-      isOpen: false,
+      isOpen: false
     }
   }),
   'SORT_IMAGE': (state, {newIndex, oldIndex}) => {
     const images = [].concat(state.images)
     const image1 = state.images[oldIndex]
-    const image2 = state.images[newIndex]
-    const lastIndex = state.count - 1
 
     // Move to new index.
     let moveIndex = newIndex
@@ -83,7 +81,7 @@ const actions = {
     ...state,
     images: [],
     count: 0
-  }),
+  })
 }
 
 function reducer (state, action) {

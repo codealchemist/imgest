@@ -2,9 +2,7 @@ import {createStore} from 'redux'
 import reducer from 'state/reducer'
 import El from 'eldo'
 import sortable from 'sortablejs'
-import torrentLoader from 'components/torrent-loader'
 import image from 'components/torrent-image'
-import loading from 'components/loading'
 import ImageEditor from '../image-editor/image-editor'
 import initialState from 'state/initial.json'
 import 'components/image-list/image-list.css'
@@ -44,6 +42,7 @@ class TorrentRenderer {
       }
 
       file.getBuffer((err, buffer) => {
+        if (err) throw err
         const image = new El(`#image-${file.id} .image-element`)
         image.style('background-image', `url('data:image/jpeg;${buffer}`)
         ++this.loadedFiles
@@ -52,8 +51,8 @@ class TorrentRenderer {
         this.state[file.id].data = buffer
 
         if (
-          this.loadedFiles === this.totalFiles
-          && typeof this.onDoneCallback === 'function'
+          this.loadedFiles === this.totalFiles &&
+          typeof this.onDoneCallback === 'function'
         ) {
           this.onDoneCallback()
         }

@@ -1,7 +1,6 @@
-import dragDrop from 'drag-drop'
 import {compose, createStore} from 'redux'
-import replicate from 'redux-replicate';
-import replicator from 'redux-replicate-localforage';
+import replicate from 'redux-replicate'
+import replicator from 'redux-replicate-localforage'
 import localforage from 'localforage'
 import reducer from 'state/reducer'
 import Count from 'components/count'
@@ -10,7 +9,7 @@ import initialState from 'state/initial.json'
 
 function load () {
   const replication = replicate({ key: 'imgest', reducerKeys: true, replicator })
-  const create = compose(replication)(createStore);
+  const create = compose(replication)(createStore)
   const store = create(reducer, initialState)
 
   // Get data count ASAP to display loading.
