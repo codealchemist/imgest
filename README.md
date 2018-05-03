@@ -2,6 +2,10 @@
 
 Add, edit and sort images in the browser, then share your images with WebTorrent!
 
+[![Build Status](https://travis-ci.org/codealchemist/imgest.svg?branch=master)](https://travis-ci.org/codealchemist/imgest)
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ## Demo site
 
 https://imgest.herokuapp.com
