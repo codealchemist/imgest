@@ -8,7 +8,7 @@ Add, edit and sort images in the browser, then share your images with WebTorrent
 
 ## Demo site
 
-https://imgest.herokuapp.com
+http://imgest.tk
 
 ## How to share your images with imgest?
 
