@@ -8,6 +8,7 @@ import LocalRenderer from 'components/local-renderer'
 import error from 'components/error-message'
 import notifier from 'components/notifier'
 import loading from 'components/loading'
+import Progress from 'components/progress'
 import 'material-design-lite'
 
 // Image lazy loading.
@@ -30,7 +31,8 @@ if (torrentLoader.loading) {
 
   torrentLoader.onTorrent((torrent) => {
     torrentRenderer.render(torrent)
-
+    const progress = new Progress(torrent)
+    progress.mount(document.body)
     const count = new Count()
     count
       .mount('#count')
