@@ -1,4 +1,4 @@
-import './progress.css';
+import './progress.css'
 export default class Progress {
   constructor (torrent) {
     this.torrent = torrent
@@ -14,11 +14,11 @@ export default class Progress {
       this.destroy()
     }
     const progress = !!this.torrent.progress && (this.torrent.progress * 100)
-    this.$element.style.width = `${progress || 0 }%`
+    this.$element.style.width = `${progress || 0}%`
     return this
   }
 
-  stop() {
+  stop () {
     clearInterval(this.interval)
   }
 
