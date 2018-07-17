@@ -6,7 +6,6 @@ import image from 'components/torrent-image'
 import ImageEditor from '../image-editor/image-editor'
 import initialState from 'state/initial.json'
 import 'components/image-list/image-list.css'
-import { IncomingMessage } from 'http';
 
 const imageList = (images = []) => (
   images
@@ -117,29 +116,29 @@ class TorrentRenderer {
     // TODO: save image data without `data:...` prefix on torrent creation.
     // This will allow to avoid converting back to str and work directly with the
     // Uint8Array. Affects rendering too.
-    function arrayBufferToString(buf, callback) {
-      var bb = new Blob([new Uint8Array(buf)])
-      var f = new FileReader()
+    function arrayBufferToString (buf, callback) {
+      var bb = new Blob([new Uint8Array(buf)]) // eslint-disable-line no-undef
+      var f = new FileReader() // eslint-disable-line no-undef
       f.onload = e => callback(e.target.result)
       f.readAsText(bb)
     }
 
     arrayBufferToString(image.data, (src) => {
-      const data = atob(src.split(',')[1])
+      const data = atob(src.split(',')[1]) // eslint-disable-line no-undef
 
       // Use typed arrays to convert the binary data to a Blob
       var arraybuffer = new ArrayBuffer(data.length)
       var view = new Uint8Array(arraybuffer)
-      for (let i=0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         view[i] = data.charCodeAt(i) & 0xff
       }
 
       let blob
       try {
-        blob = new Blob([arraybuffer], {type: 'application/octet-stream'})
+        blob = new Blob([arraybuffer], {type: 'application/octet-stream'}) // eslint-disable-line no-undef
       } catch (e) {
         // Support older browsers.
-        const bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder)
+        const bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder)()
         bb.append(arraybuffer)
         blob = bb.getBlob('application/octet-stream')
       }
