@@ -34,7 +34,7 @@ class TorrentLoader {
   monitorDownload () {
     const monitorInterval = 2 // seconds
 
-    this.interval = setInterval(() => {
+    this.monitorInterval = setInterval(() => {
       const { downloadSpeed } = this.wt
       if (downloadSpeed > this.maxDownloadSpeed) {
         this.maxDownloadSpeed = downloadSpeed
@@ -42,6 +42,11 @@ class TorrentLoader {
 
       if (!this.torrent) return
       this.peers = this.torrent.numPeers
+
+      // Completed?
+      if (this.torrent.progress === 1) {
+        clearInterval(this.monitorInterval)
+      }
     }, monitorInterval * 1000)
   }
 
@@ -53,7 +58,7 @@ class TorrentLoader {
         if (typeof this.onErrorCallback === 'function') {
           this.onErrorCallback(err)
         }
-        clearInterval(this.interval)
+        clearInterval(this.monitorInterval)
       }
     }, checkDelay * 1000)
   }

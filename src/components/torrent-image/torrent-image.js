@@ -10,6 +10,10 @@ const image = ({id, name, description, type, data}) => (`
       <button data-id="${id}" class="view mdl-button mdl-button--fab mdl-button--mini-fab">
         <i class="material-icons mdl-color-text--white">remove_red_eye</i>
       </button>
+
+      <button data-id="${id}" class="download mdl-button mdl-button--fab mdl-button--mini-fab">
+        <i class="material-icons mdl-color-text--white">arrow_downward</i>
+      </button>
     </div>
   </div>
 `)

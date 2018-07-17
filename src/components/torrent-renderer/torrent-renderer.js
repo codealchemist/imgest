@@ -6,6 +6,7 @@ import image from 'components/torrent-image'
 import ImageEditor from '../image-editor/image-editor'
 import initialState from 'state/initial.json'
 import 'components/image-list/image-list.css'
+import { IncomingMessage } from 'http';
 
 const imageList = (images = []) => (
   images
@@ -87,6 +88,7 @@ class TorrentRenderer {
     this.$el.on('click', (e) => {
       e.stopPropagation()
       if (e.target.className.match(/^view.*$/)) this.view(e, e.target.dataset)
+      if (e.target.className.match(/^download.*$/)) this.download(e, e.target.dataset)
     })
   }
 
@@ -97,6 +99,62 @@ class TorrentRenderer {
       type: 'OPEN_IMAGE_EDITOR',
       image: { ...image },
       readOnly: true
+    })
+  }
+
+  download (e, {id}) {
+    const image = this.state[id]
+    // console.log('image', image)
+
+    // TODO: move to helper
+    const typesMap = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/gif': 'gif'
+    }
+    const ext = typesMap[image.type] || 'data'
+
+    // TODO: save image data without `data:...` prefix on torrent creation.
+    // This will allow to avoid converting back to str and work directly with the
+    // Uint8Array. Affects rendering too.
+    function arrayBufferToString(buf, callback) {
+      var bb = new Blob([new Uint8Array(buf)])
+      var f = new FileReader()
+      f.onload = e => callback(e.target.result)
+      f.readAsText(bb)
+    }
+
+    arrayBufferToString(image.data, (src) => {
+      const data = atob(src.split(',')[1])
+
+      // Use typed arrays to convert the binary data to a Blob
+      var arraybuffer = new ArrayBuffer(data.length)
+      var view = new Uint8Array(arraybuffer)
+      for (let i=0; i < data.length; i++) {
+        view[i] = data.charCodeAt(i) & 0xff
+      }
+
+      let blob
+      try {
+        blob = new Blob([arraybuffer], {type: 'application/octet-stream'})
+      } catch (e) {
+        // Support older browsers.
+        const bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder)
+        bb.append(arraybuffer)
+        blob = bb.getBlob('application/octet-stream')
+      }
+
+      // Use the URL object to create a temporary URL.
+      const url = (window.webkitURL || window.URL).createObjectURL(blob)
+
+      // Trigger download.
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `imgest-file.${ext}` // TODO: get real filename
+      a.click()
+
+      // Delete blob.
+      window.URL.revokeObjectURL(url)
     })
   }
 }
