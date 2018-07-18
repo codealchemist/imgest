@@ -6,6 +6,8 @@ Add, edit and sort images in the browser, then share your images with WebTorrent
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
+![screenshot](https://cldup.com/Rn8_I7voWf.gif)
+
 ## Demo site
 
 http://imgest.tk
