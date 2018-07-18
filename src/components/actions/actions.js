@@ -16,13 +16,17 @@ const actions = ({count, hasMagnet, isCreatingMagnet}) => `
     </div>
   </div>
 
-  <div id="share-action" class="btn-action share ${(count && !isCreatingMagnet) ? '' : 'disabled'}"
+  <div
+    id="share-action"
+    class="btn-action share ${(count && !isCreatingMagnet) ? '' : 'disabled'}"
     style="display: ${hasMagnet ? 'none' : 'block'}"
   >
     <div class="webtorrent-icon no-events"></div>
   </div>
 
-  <div id="copy-magnet-action" class="btn-action share ${hasMagnet ? '' : 'disabled'}"
+  <div
+    id="copy-magnet-action"
+    class="btn-action share"
     style="display: ${hasMagnet ? 'block' : 'none'}"
   >
     <div class="action-icon no-events">
@@ -68,6 +72,7 @@ class Actions {
     if (!this.state) return
     if (!window.confirm('Are you sure you want to remove ALL images?')) return
     selectors.$imageList.html('')
+    this.shortUrl = null
     this.store.dispatch({type: 'CLEAR'})
   }
 
