@@ -6,8 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --mode=production",
-    "dist": "http-server dist",
-    "test": "standard-focus"
+    "dist": "http-server dist"
   },
   "repository": {
     "type": "git",
@@ -40,28 +39,13 @@
     "sortablejs": "^1.7.0",
     "vanilla-lazyload": "^8.7.1",
     "webpack-dev-server": "^3.1.3",
-    "webtorrent": "^0.98.24"
+    "webtorrent": "^0.108.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "browser-sync": "^2.23.6",
-    "browserify": "^16.2.0",
-    "browserify-css": "^0.14.0",
     "css-loader": "^0.28.11",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
-    "gulp-clean-css": "^3.9.3",
-    "gulp-concat": "^2.6.1",
-    "gulp-copy": "^1.1.0",
-    "gulp-if": "^2.0.2",
-    "gulp-sequence": "^1.0.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-useref": "^3.1.5",
-    "pump": "^3.0.0",
-    "standard-focus": "^1.1.2",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
